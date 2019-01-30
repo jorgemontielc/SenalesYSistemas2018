@@ -1,0 +1,355 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0073)https://jorge98cr.github.io/ASySPrac5JorgeCruz/ASySPrac5JorgeMontiel.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Práctica 5: Series de Fourier en tiempo continuo</title><meta name="generator" content="MATLAB 8.6"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-11-23"><meta name="DC.source" content="ASySPrac5JorgeMontiel.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Práctica 5: Series de Fourier en tiempo continuo</h1><!--introduction--><p>Cruz Montejo Jorge Luis</p><p>Montiel Cruz Jorge de Jesús</p><p>2MV1</p><p>Análisis de Señales y Sistemas</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="https://jorge98cr.github.io/ASySPrac5JorgeCruz/ASySPrac5JorgeMontiel.html#1">Objetivos</a></li><li><a href="https://jorge98cr.github.io/ASySPrac5JorgeCruz/ASySPrac5JorgeMontiel.html#2">Introducción: Aproximación numérica de los coeficientes de Fourier</a></li><li><a href="https://jorge98cr.github.io/ASySPrac5JorgeCruz/ASySPrac5JorgeMontiel.html#3">Desarrollo</a></li><li><a href="https://jorge98cr.github.io/ASySPrac5JorgeCruz/ASySPrac5JorgeMontiel.html#4">1. Ejemplo 6.1</a></li><li><a href="https://jorge98cr.github.io/ASySPrac5JorgeCruz/ASySPrac5JorgeMontiel.html#5">2. Ejemplo 6.2</a></li><li><a href="https://jorge98cr.github.io/ASySPrac5JorgeCruz/ASySPrac5JorgeMontiel.html#6">3. Ejemplo 6.4</a></li><li><a href="https://jorge98cr.github.io/ASySPrac5JorgeCruz/ASySPrac5JorgeMontiel.html#7">4. Ejercicio 6.5</a></li><li><a href="https://jorge98cr.github.io/ASySPrac5JorgeCruz/ASySPrac5JorgeMontiel.html#8">5. Ejemplo 6.7</a></li><li><a href="https://jorge98cr.github.io/ASySPrac5JorgeCruz/ASySPrac5JorgeMontiel.html#9">6.</a></li><li><a href="https://jorge98cr.github.io/ASySPrac5JorgeCruz/ASySPrac5JorgeMontiel.html#10">7.</a></li><li><a href="https://jorge98cr.github.io/ASySPrac5JorgeCruz/ASySPrac5JorgeMontiel.html#12">Apéndices</a></li><li><a href="https://jorge98cr.github.io/ASySPrac5JorgeCruz/ASySPrac5JorgeMontiel.html#13">Bibliografía</a></li></ul></div><h2>Objetivos<a name="1"></a></h2><div><ol><li>Realizar gráficas de series de Fourier exponenciales y trigonométricas  en tiempo continuo</li><li>Manipulación de instrucciones en MATLAB</li><li>Cálculo numérico de los coeficientes de Fourier</li></ol></div><h2>Introducción: Aproximación numérica de los coeficientes de Fourier<a name="2"></a></h2><p>Es posible calcular los coeficientes de Fourier <img src="./Práctica 5_ Series de Fourier en tiempo continuo_files/ASySPrac5JorgeMontiel_eq10922897471658752443.png" alt="$D_n$"> numéricamente usando distintos métodos. Sabemos que los coeficientes de Fourier están dados por la siguiente integral:</p><p><img src="./Práctica 5_ Series de Fourier en tiempo continuo_files/ASySPrac5JorgeMontiel_eq00613142715111841061.png" alt="$D_n=\frac{1}{T_0}\int\limits_{&lt;T_0&gt;}x(t)e^{-j\omega_0 nt}dt$"></p><p>Así pues, se puede resolver analíticamente, pero para efectos computacionales se debe realizar numéricamente, esto es, realizar una aproximación. Así pues, en esta práctica se realizó una aproximación numérica usando el algoritmo del trapecio compuesto. Este algoritmo aproxima el área bajo una curva (integral definida) de una función, con una precisión bastante considerable. Para el caso de los coeficientes de Fourier, al tener un factor que resulta ser una exponencial compleja, entonces se debe dividir en dos integrales usando la identidad de Euler y calcular el área bajo la curva de estas por separado y luego expresar como un solo número complejo. De esta manera podemos encontrar los coeficientes de Fourier y construir la serie de Fourier de alguna señal periódica usando la ecuación ya conocida:</p><p><img src="./Práctica 5_ Series de Fourier en tiempo continuo_files/ASySPrac5JorgeMontiel_eq15271058563148646970.png" alt="$S_f(t)=\sum\limits_{n=-\infty}^{\infty}D_ne^{\mathrm{j}\omega_0 nt}$"></p><h2>Desarrollo<a name="3"></a></h2><p>Para cada ejemplo se debe realizar lo siguiente:</p><div><ol><li>Realizar el programa de la serie que se indica</li><li>Gráfica de la serie de Fourier en un intervalo que muestre 5 repeticiones</li><li>Gráfica de la señal y la serie de Fourier para 4 armónicos</li><li>Gráfica del error</li><li>Gráfica de la enrgía del error</li><li>Espectro de magnitud para 4 armónicos</li><li>Espectro de fase para 4 armónicos</li><li>Todo lo anterior para 15 armónicos</li></ol></div><h2>1. Ejemplo 6.1<a name="4"></a></h2><p>Con serie y espectro trigonométrico debe de indicar la función y los valores de <img src="./Práctica 5_ Series de Fourier en tiempo continuo_files/ASySPrac5JorgeMontiel_eq17209022980679129862.png" alt="$a_n=0.504\frac{2}{16n^2+1}$"> y <img src="./Práctica 5_ Series de Fourier en tiempo continuo_files/ASySPrac5JorgeMontiel_eq12026713271829725709.png" alt="$b_n=0.504\frac{8n}{16n^2+1}$"> que se usaron para obtener <img src="./Práctica 5_ Series de Fourier en tiempo continuo_files/ASySPrac5JorgeMontiel_eq15493572526544046487.png" alt="$C_n=0.504\frac{2}{\sqrt{1+16n^2}}$">, además, el valor del ángulo es: <img src="./Práctica 5_ Series de Fourier en tiempo continuo_files/ASySPrac5JorgeMontiel_eq14028925335272509420.png" alt="$\theta_n=-\mathrm{arctan}(4n)$">, así pues, la función <img src="./Práctica 5_ Series de Fourier en tiempo continuo_files/ASySPrac5JorgeMontiel_eq01390547541296783244.png" alt="$f(t)=e^{-\frac{t}{2}}(u(t)-u(t-\pi))$"> tiene los siguientes resultados.</p><p>Para 4 armónicos</p><p><img vspace="5" hspace="5" src="./Práctica 5_ Series de Fourier en tiempo continuo_files/6_1_4armo.jpg" alt=""> </p><p>Para 15 armónicos</p><p><img vspace="5" hspace="5" src="./Práctica 5_ Series de Fourier en tiempo continuo_files/6_1_15armo.jpg" alt=""> </p><h2>2. Ejemplo 6.2<a name="5"></a></h2><p>Con serie y espectro exponencial y A=3, valor de la función y valor de los coeficientes. La función <img src="./Práctica 5_ Series de Fourier en tiempo continuo_files/ASySPrac5JorgeMontiel_eq14801300460928707692.png" alt="$f(t)=-6(t+1)(u(t+1)-u(t+0.5))+6t(u(t+0.5)+u(t-0.5))+6(1-t)(u(t-0.5)-u(t-1))$"> Cuyos coeficientes de Fourier están dados por la siguiente ecuación:</p><p><img src="./Práctica 5_ Series de Fourier en tiempo continuo_files/ASySPrac5JorgeMontiel_eq05487387031753193934.png" alt="$D_n=\frac{-12}{n^2\pi^2}\mathrm{j}\sin{\frac{n\pi}{2}}$"></p><p>Para 4 armónicos</p><p><img vspace="5" hspace="5" src="./Práctica 5_ Series de Fourier en tiempo continuo_files/6_2_4armo.jpg" alt=""> </p><p>Para 15 armónicos</p><p><img vspace="5" hspace="5" src="./Práctica 5_ Series de Fourier en tiempo continuo_files/6_2_15armo.jpg" alt=""> </p><h2>3. Ejemplo 6.4<a name="6"></a></h2><p>La función <img src="./Práctica 5_ Series de Fourier en tiempo continuo_files/ASySPrac5JorgeMontiel_eq10663635548764805765.png" alt="$f(t)=$"> cuyos coeficientes de Fourier están dados por la siguiente ecuación:</p><p><img src="./Práctica 5_ Series de Fourier en tiempo continuo_files/ASySPrac5JorgeMontiel_eq01995663679962944846.png" alt="$D_n=\frac{1}{n\pi}\sin{\frac{n\pi}{2}}$"></p><p>Para 4 armónicos</p><p><img vspace="5" hspace="5" src="./Práctica 5_ Series de Fourier en tiempo continuo_files/6_4_4armo.jpg" alt=""> </p><p>Para 15 armónicos</p><p><img vspace="5" hspace="5" src="./Práctica 5_ Series de Fourier en tiempo continuo_files/6_4_15armo.jpg" alt=""> </p><h2>4. Ejercicio 6.5<a name="7"></a></h2><p>La funcion <img src="./Práctica 5_ Series de Fourier en tiempo continuo_files/ASySPrac5JorgeMontiel_eq17723041360156512506.png" alt="$f(t)=|\sin{t}|$"> cuyos coeficientes de Fourier están dados por la siguiente ecuación:</p><p><img src="./Práctica 5_ Series de Fourier en tiempo continuo_files/ASySPrac5JorgeMontiel_eq00673653431523267398.png" alt="$D_n=\frac{1}{\pi}\int_0^\pi|\sin{t}|e^{-\mathrm{j}n\pi t}dt =\frac{2}{\pi-4\pi n^2}$"></p><p>Para 4 armónicos</p><p><img vspace="5" hspace="5" src="./Práctica 5_ Series de Fourier en tiempo continuo_files/6_5_4armo.jpg" alt=""> </p><p>Para 15 armónicos</p><p><img vspace="5" hspace="5" src="./Práctica 5_ Series de Fourier en tiempo continuo_files/6_5_15armo.jpg" alt=""> </p><h2>5. Ejemplo 6.7<a name="8"></a></h2><p>La funcion <img src="./Práctica 5_ Series de Fourier en tiempo continuo_files/ASySPrac5JorgeMontiel_eq10475468993854216030.png" alt="$f(t)=\delta (t)$"> cuyos coeficientes de Fourier están dados por la siguiente ecuación:</p><p><img src="./Práctica 5_ Series de Fourier en tiempo continuo_files/ASySPrac5JorgeMontiel_eq00714043225535097882.png" alt="$D_n=\frac{1}{3}\int_{-\frac{3}{2}}^{\frac{3}{2}}\delta_3(t)e^{-\mathrm{j}n\omega_0t}=\frac{1}{3}$"></p><p>Para 4 armónicos</p><p><img vspace="5" hspace="5" src="./Práctica 5_ Series de Fourier en tiempo continuo_files/dirac_4armo.jpg" alt=""> </p><p>Para 15 armónicos</p><p><img vspace="5" hspace="5" src="./Práctica 5_ Series de Fourier en tiempo continuo_files/dirac_15armo.jpg" alt=""> </p><h2>6.<a name="9"></a></h2><pre class="codeinput">x=@(t) (t&gt;=-1&amp;t&lt;-0.5).*(-6*t-6)+(t&gt;=-0.5&amp;t&lt;0.5).*(6*t)+(t&gt;=0.5&amp;t&lt;=1).*(-6*t+6);
+x_n=[1 2 3 3 4 4 5 5 6 6 7 7 8 8 9 9];
+t = linspace (-2*pi, 2*pi,100);
+sumterms = zeros(16, length(t)); sumterms(1) = 0;
+<span class="keyword">for</span> n = 1:size(sumterms,1)-1;
+    sumterms(n+1,:) = (24/(n^2*pi^2))*sin(n*pi/2)*sin(pi*n*t);
+<span class="keyword">end</span>
+y1=sumterms;
+q=cumsum(y1);
+<span class="keyword">for</span> n=[0,1:2:size(sumterms,1)-1]
+
+    subplot(3,3,x_n(n+1))
+    plot(t,x(t),<span class="string">'--k'</span>);
+    hold <span class="string">on</span>
+    plot(t,q(n+1,:)+y1(1));
+    axis([-6 6, -5 5])
+    xlabel(<span class="string">'$t$'</span>,<span class="string">'interpreter'</span>,<span class="string">'latex'</span>)
+    ylabel([<span class="string">'$x_{'</span>,num2str(n),<span class="string">'} (t)$'</span>],<span class="string">'interpreter'</span>,<span class="string">'latex'</span>)
+    grid <span class="string">on</span>
+<span class="keyword">end</span>
+saveas(gcf,<span class="string">'P5_p6.jpg'</span>)
+</pre><img vspace="5" hspace="5" src="./Práctica 5_ Series de Fourier en tiempo continuo_files/ASySPrac5JorgeMontiel_01.png" alt=""> <h2>7.<a name="10"></a></h2><p>Elabore un código que implemente el algoritmo de trapecio compuesto para <img src="./Práctica 5_ Series de Fourier en tiempo continuo_files/ASySPrac5JorgeMontiel_eq08501079337458606022.png" alt="$n=15$">, Utilice este código para aproximar <img src="./Práctica 5_ Series de Fourier en tiempo continuo_files/ASySPrac5JorgeMontiel_eq12324390629844581234.png" alt="$D_0,...,D_4$"> del ejemplo de la práctica. Ahora implemente el código COMPUTER EXAMPLE C6.4 que se encuentra al final de la sección 6.6 de Lathi, y calcule nuevamente el los coeficientes <img src="./Práctica 5_ Series de Fourier en tiempo continuo_files/ASySPrac5JorgeMontiel_eq12324390629844581234.png" alt="$D_0,...,D_4$"> del ejemplo propuesto. Muestre una tabla que contenga los coeficientes mencionados calculados con los dos algoritmos y de forma exacta, ¿Qué algoritmo aproxima mejor a los coeficientes?, para esto compare los coeficientes con el valor absoluto de la resta.</p><pre class="codeinput">N=15;
+a=0;
+b=pi;
+f=@(t) exp(-t/2);
+T_0=pi;
+n=4;
+MiTrapecio(N,a,b,f,T_0,n)
+</pre><pre class="codeoutput">Tabla = 
+
+    Coeficientes_Dn       Dn_analitico            Dn_Trapecio             Dn_Lathi          Resta_trapecio    Resta_Lathi
+    _______________    ___________________    ___________________    ___________________    ______________    ___________
+
+    0                      0.504+0i             0.50474+0i             0.50428+0i           0.00074028        0.00028111 
+    1                   0.029647-0.11859i      0.030128+0.11681i      0.029665-0.11865i        0.23539        6.2114e-05 
+    2                  0.0077538-0.062031i    0.0082355+0.058337i    0.0077597-0.062053i       0.12037        2.2527e-05 
+    3                  0.0034759-0.04171i     0.0039773+0.036056i    0.0034794-0.041714i      0.077768         5.432e-06 
+    4                  0.0019611-0.031377i    0.0024955+0.023657i    0.0019638-0.03137i       0.055037        8.3546e-06 
+
+</pre><p>De la resta vemos que el algoritmo de Lathi aproxima mejor los coeficientes de Fourier, esto es así porque dicho algoritmo implementa la transformada rápida de Fourier, algortimo eficiente que aproxima eficientemente dichos coeficientes.</p><h2>Apéndices<a name="12"></a></h2><p>Código del punto 7.</p><pre class="language-matlab"><span class="keyword">function</span> MiTrapecio(N,a,b,f,T_0,n)
+<span class="comment">%N=número de trapecios</span>
+<span class="comment">%a=intervalo inicial;</span>
+<span class="comment">%b=intervalo final;</span>
+<span class="comment">%f=funcion;</span>
+<span class="comment">%T_0=periodo;</span>
+<span class="comment">%n=número de armonicos;</span>
+armo=zeros(n+1,1);
+cont=1;
+w0=2*pi/T_0;
+<span class="keyword">for</span> i=0:n
+ 
+            x_l=a;
+            x2=a;
+            s=0;
+            s2=0;
+            h=(b-a)/N;
+            I=1;
+            I2=1;
+            freal=@(t) f(t)*cos(w0*i*t);
+            fimag=@(t) f(t)*sin(w0*i*t);
+                <span class="keyword">while</span> I&lt;=N-1
+                    x_l=x_l+h;
+                    s=s+freal(x_l);
+                    I=I+1;
+                <span class="keyword">end</span> 
+                <span class="keyword">while</span> I2&lt;=N-1
+                    x2=x2+h;
+                    s2=s2+fimag(x2);
+                    I2=I2+1;
+                <span class="keyword">end</span> 
+            Area=h/2*(freal(a)+2*s+freal(b));
+            Area2=h/2*(fimag(a)+2*s2+fimag(b))*1i; 
+            Area3=(Area2+Area)/T_0;
+            <span class="comment">%disp(abs(Area3));</span>
+            armo(cont)=Area3;
+            cont=cont+1;
+<span class="keyword">end</span> 
+Dn_Trapecio=armo;
+<span class="comment">%Programa de Lathi</span>
+T_0=pi;
+N_0=256;
+T=T_0/N_0;
+t=(0:T:T*(N_0-1));
+x_l=exp(-t/2); x_l(1)=(exp(-pi/2)+1)/2;
+D_n_1=fft(x_l)/N_0;
+Dn_Lathi=[D_n_1(1);D_n_1(2);D_n_1(3);D_n_1(4);D_n_1(5);];
+<span class="comment">%%Analitico </span>
+cont=1;
+Dn_analitico=zeros(n+1,1);
+        <span class="keyword">for</span> i=0:n
+            x_an=0.504/(1+4*1i*i);
+            Dn_analitico(cont)=x_an;
+            cont=cont+1;
+            
+        <span class="keyword">end</span> 
+Coeficientes_Dn=[<span class="string">'0'</span>;<span class="string">'1'</span>;<span class="string">'2'</span>;<span class="string">'3'</span>;<span class="string">'4'</span>];
+Resta_trapecio=abs(Dn_analitico-Dn_Trapecio);
+Resta_Lathi=abs(Dn_analitico-Dn_Lathi);
+Tabla=table(Coeficientes_Dn,Dn_analitico,Dn_Trapecio,Dn_Lathi,Resta_trapecio,Resta_Lathi)
+<span class="keyword">end</span>
+ 
+
+</pre><h2>Bibliografía<a name="13"></a></h2><p>B. P. Lathi. (2004). Linear Systems and Signals. New York: Oxford University Press.</p><p>F. Dominguez Sanchez &amp; A. Nieves Hurtado. (1999). Métodos Numéricos Aplicados a la Ingeniería. México: Continental.</p><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB® R2015b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Práctica 5: Series de Fourier en tiempo continuo
+% Cruz Montejo Jorge Luis
+%
+% Montiel Cruz Jorge de Jesús 
+%
+% 2MV1
+%
+% Análisis de Señales y Sistemas
+%% Objetivos
+% # Realizar gráficas de series de Fourier exponenciales y trigonométricas
+%  en tiempo continuo
+% # Manipulación de instrucciones en MATLAB
+% # Cálculo numérico de los coeficientes de Fourier
+%% Introducción: Aproximación numérica de los coeficientes de Fourier
+% Es posible calcular los coeficientes de Fourier $D_n$ numéricamente
+% usando distintos métodos. Sabemos que los coeficientes de Fourier están
+% dados por la siguiente integral: 
+% 
+% $D_n=\frac{1}{T_0}\int\limits_{<T_0>}x(t)e^{-j\omega_0 nt}dt$
+%
+% Así pues, se puede resolver analíticamente, pero para efectos
+% computacionales se debe realizar numéricamente, esto es, realizar una
+% aproximación. 
+% Así pues, en esta práctica se realizó una aproximación numérica usando el
+% algoritmo del trapecio compuesto. Este algoritmo aproxima el área bajo
+% una curva (integral definida) de una función, con una precisión bastante
+% considerable. Para el caso de los coeficientes de Fourier, al tener un
+% factor que resulta ser una exponencial compleja, entonces se debe dividir
+% en dos integrales usando la identidad de Euler y calcular el área bajo la
+% curva de estas por separado y luego expresar como un solo número
+% complejo. De esta manera podemos encontrar los coeficientes de Fourier y
+% construir la serie de Fourier de alguna señal periódica usando la
+% ecuación ya conocida: 
+%
+% $S_f(t)=\sum\limits_{n=-\infty}^{\infty}D_ne^{\mathrm{j}\omega_0 nt}$
+%
+%% Desarrollo 
+% Para cada ejemplo se debe realizar lo siguiente:
+%
+% # Realizar el programa de la serie que se indica
+% # Gráfica de la serie de Fourier en un intervalo que muestre 5
+% repeticiones
+% # Gráfica de la señal y la serie de Fourier para 4 armónicos
+% # Gráfica del error
+% # Gráfica de la enrgía del error
+% # Espectro de magnitud para 4 armónicos
+% # Espectro de fase para 4 armónicos
+% # Todo lo anterior para 15 armónicos
+%
+%% 1. Ejemplo 6.1 
+% Con serie y espectro trigonométrico debe de indicar la función y los
+% valores de $a_n=0.504\frac{2}{16n^2+1}$ y $b_n=0.504\frac{8n}{16n^2+1}$
+% que se usaron para obtener $C_n=0.504\frac{2}{\sqrt{1+16n^2}}$, además,
+% el valor del ángulo es: $\theta_n=-\mathrm{arctan}(4n)$, así pues, la
+% función $f(t)=e^{-\frac{t}{2}}(u(t)-u(t-\pi))$ tiene los siguientes
+% resultados.
+%
+% Para 4 armónicos
+%
+% <<6_1_4armo.jpg>>
+%
+% Para 15 armónicos
+%
+% <<6_1_15armo.jpg>>
+%
+%% 2. Ejemplo 6.2
+% Con serie y espectro exponencial y A=3, valor de la función y valor de
+% los coeficientes.
+% La función $f(t)=-6(t+1)(u(t+1)-u(t+0.5))+6t(u(t+0.5)+u(t-0.5))+6(1-t)(u(t-0.5)-u(t-1))$
+% Cuyos coeficientes de Fourier están dados por la siguiente ecuación:
+%
+% $D_n=\frac{-12}{n^2\pi^2}\mathrm{j}\sin{\frac{n\pi}{2}}$
+%
+% Para 4 armónicos
+%
+% <<6_2_4armo.jpg>>
+%
+% Para 15 armónicos 
+%
+% <<6_2_15armo.jpg>>
+%
+%% 3. Ejemplo 6.4
+% La función $f(t)=$ cuyos coeficientes de Fourier están dados por la
+% siguiente ecuación: 
+%
+% $D_n=\frac{1}{n\pi}\sin{\frac{n\pi}{2}}$
+%
+% Para 4 armónicos 
+% 
+% <<6_4_4armo.jpg>>
+%
+% Para 15 armónicos
+%
+% <<6_4_15armo.jpg>>
+%
+%% 4. Ejercicio 6.5
+% La funcion $f(t)=|\sin{t}|$ cuyos coeficientes de Fourier están dados por
+% la siguiente ecuación: 
+%
+% $D_n=\frac{1}{\pi}\int_0^\pi|\sin{t}|e^{-\mathrm{j}n\pi t}dt =\frac{2}{\pi-4\pi n^2}$
+%
+% Para 4 armónicos 
+%
+% <<6_5_4armo.jpg>>
+%
+% Para 15 armónicos 
+%
+% <<6_5_15armo.jpg>>
+%
+%% 5. Ejemplo 6.7 
+% La funcion $f(t)=\delta (t)$ cuyos coeficientes de Fourier están dados por
+% la siguiente ecuación: 
+% 
+% $D_n=\frac{1}{3}\int_{-\frac{3}{2}}^{\frac{3}{2}}\delta_3(t)e^{-\mathrm{j}n\omega_0t}=\frac{1}{3}$ 
+%
+% Para 4 armónicos 
+%
+% <<dirac_4armo.jpg>>
+%
+% Para 15 armónicos
+% 
+% <<dirac_15armo.jpg>>
+%
+%% 6.
+x=@(t) (t>=-1&t<-0.5).*(-6*t-6)+(t>=-0.5&t<0.5).*(6*t)+(t>=0.5&t<=1).*(-6*t+6);
+x_n=[1 2 3 3 4 4 5 5 6 6 7 7 8 8 9 9];
+t = linspace (-2*pi, 2*pi,100);
+sumterms = zeros(16, length(t)); sumterms(1) = 0;
+for n = 1:size(sumterms,1)-1;
+    sumterms(n+1,:) = (24/(n^2*pi^2))*sin(n*pi/2)*sin(pi*n*t);
+end
+y1=sumterms;
+q=cumsum(y1);
+for n=[0,1:2:size(sumterms,1)-1]
+    
+    subplot(3,3,x_n(n+1))
+    plot(t,x(t),'REPLACE_WITH_DASH_DASHk');
+    hold on 
+    plot(t,q(n+1,:)+y1(1));
+    axis([-6 6, -5 5])
+    xlabel('$t$','interpreter','latex')
+    ylabel(['$x_{',num2str(n),'} (t)$'],'interpreter','latex')
+    grid on
+end
+saveas(gcf,'P5_p6.jpg')
+%% 7. 
+% Elabore un código que implemente el algoritmo de trapecio compuesto
+% para $n=15$, Utilice este código para aproximar $D_0,...,D_4$ del ejemplo
+% de la práctica. Ahora implemente el código COMPUTER EXAMPLE C6.4 que se
+% encuentra al final de la sección 6.6 de Lathi, y calcule nuevamente el
+% los coeficientes $D_0,...,D_4$ del ejemplo propuesto. Muestre una tabla
+% que contenga los coeficientes mencionados calculados con los dos
+% algoritmos y de forma exacta, ¿Qué algoritmo aproxima mejor a los
+% coeficientes?, para esto compare los coeficientes con el valor absoluto de
+% la resta. 
+%
+N=15;
+a=0;
+b=pi;
+f=@(t) exp(-t/2);
+T_0=pi;
+n=4;
+MiTrapecio(N,a,b,f,T_0,n)
+%%
+% De la resta vemos que el algoritmo de Lathi aproxima mejor los
+% coeficientes de Fourier, esto es así porque dicho algoritmo implementa la
+% transformada rápida de Fourier, algortimo eficiente que aproxima
+% eficientemente dichos coeficientes.
+%
+%% Apéndices
+% Código del punto 7.
+%
+% <include>MiTrapecio.m</include>
+%
+%% Bibliografía
+% B. P. Lathi. (2004). Linear Systems and Signals. New York: Oxford University Press.
+%
+% F. Dominguez Sanchez & A. Nieves Hurtado. (1999). Métodos Numéricos Aplicados a la Ingeniería. México: Continental.
+
+
+
+
+##### SOURCE END #####
+--></body></html>

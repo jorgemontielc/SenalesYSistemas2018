@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0076)https://jorge98cr.github.io/ASySPrac4JorgeMontiel/ASySPrac4JorgeMontiel.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Práctica 4: Convolución y correlación de señales en tiempo continuo</title><meta name="generator" content="MATLAB 8.6"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-11-16"><meta name="DC.source" content="ASySPrac4JorgeMontiel.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Práctica 4: Convolución y correlación de señales en tiempo continuo</h1><!--introduction--><pre>Cruz Montejo Jorge Luis
+Montiel Cruz Jorge de Jesús
+2MV1
+Análisis de Señales y Sistemas</pre><!--/introduction--><h2>Contents</h2><div><ul><li><a href="https://jorge98cr.github.io/ASySPrac4JorgeMontiel/ASySPrac4JorgeMontiel.html#1">1.</a></li><li><a href="https://jorge98cr.github.io/ASySPrac4JorgeMontiel/ASySPrac4JorgeMontiel.html#4">2.</a></li><li><a href="https://jorge98cr.github.io/ASySPrac4JorgeMontiel/ASySPrac4JorgeMontiel.html#7">3.</a></li><li><a href="https://jorge98cr.github.io/ASySPrac4JorgeMontiel/ASySPrac4JorgeMontiel.html#8">4.</a></li><li><a href="https://jorge98cr.github.io/ASySPrac4JorgeMontiel/ASySPrac4JorgeMontiel.html#9">5</a></li></ul></div><h2>1.<a name="1"></a></h2><p>Para el PR04 reporte la grafica de la simulación númerica de la convolución y compare con el resultado análitico que obtuvo para el problema 1, esto es, su práctica tendrá que incluir una llamada a la función <i>convconm</i> y posteriormente se tendrá que mostrar la gráfica tanto de las señales involucradas como el resultado de la convolución, y en esta última gráficara su resultado analitico, se tendrá que incluir el resultado analitico.</p><pre class="codeinput">x=@(t) exp(-t).*(t&gt;=0&amp;t&lt;=1);
+h=@(t) t.*(t&gt;=-1&amp;t&lt;=1);
+convconm(x,h,1)
+</pre><img vspace="5" hspace="5" src="./Práctica 4_ Convolución y correlación de señales en tiempo continuo_files/ASySPrac4JorgeMontiel_01.png" alt=""> <p>El resultado analítico</p><p><img vspace="5" hspace="5" src="./Práctica 4_ Convolución y correlación de señales en tiempo continuo_files/RPL04_1.jpg" alt=""> </p><h2>2.<a name="4"></a></h2><p>Para el PR05 reporte la gráfica de la simulación numérica de la correlación y compare con el resultado análitico que obtuvo para el problema e), esto es, su práctica tendrá que incluir una llamada a la función <i>convconm</i> y posteriormente se tendrá que mostrar la gráfica, tanto de las señales involucradas como el resultado de la convolución, y en esta última graficará su resultado analítico, se tendrá que incluir el resultado analítico.</p><pre class="codeinput"> x2=@(t) ((t&gt;=0)&amp;(t&lt;3))-((t&gt;=3)&amp;(t&lt;4));
+ h2=@(t) ((t&gt;=0)&amp;(t&lt;3))-((t&gt;=3)&amp;(t&lt;4));
+ convconm(x2,h2,-1)
+</pre><img vspace="5" hspace="5" src="./Práctica 4_ Convolución y correlación de señales en tiempo continuo_files/ASySPrac4JorgeMontiel_02.png" alt=""> <p>El resultado analítico</p><p><img vspace="5" hspace="5" src="./Práctica 4_ Convolución y correlación de señales en tiempo continuo_files/RPL04_2.jpg" alt=""> </p><h2>3.<a name="7"></a></h2><p>Realice la simulación de la convolución de las señales (c) con (d) del problema 3.1.1.</p><pre class="codeinput">a=[-9 -6 -3 0 3 6 9];
+b=[0 4 2 0 2 4 0];
+n1=-3:3;
+convdisc([n1;a],[n1;b],3)
+</pre><img vspace="5" hspace="5" src="./Práctica 4_ Convolución y correlación de señales en tiempo continuo_files/ASySPrac4JorgeMontiel_03.png" alt=""> <h2>4.<a name="8"></a></h2><p>Realice la simulación de la correlación de las señales (c) con (d) del problema 3.1.1.</p><pre class="codeinput">f1=@(n) 3*n.*(n&gt;=-3 &amp; n&lt;=3);
+f2=@(n) -2*n.*(n&gt;=-2 &amp; n&lt;=0)+2*n.*(n&gt;0 &amp; n&lt;=2);
+a2=[-3 -2 -1 0 1 2 3];
+b2=[-3 -2 -1 0 1 2 3];
+convdisc([a2;f1(a2)],[b2;f2(b2)],4)
+</pre><img vspace="5" hspace="5" src="./Práctica 4_ Convolución y correlación de señales en tiempo continuo_files/ASySPrac4JorgeMontiel_04.png" alt=""> <h2>5<a name="9"></a></h2><p>Realice  la convolución de las señales (c) con (d) del problema 3.1.1 utilizando el comando conv de MATLAB, muestre el código utilizado y gráfique el resultado, sugerencia: Utilice las propiedades de traslación de la convolución.</p><pre class="codeinput">a3=[-9 -6 -3 0 3 6 9];
+b3=[0 4 2 0 2 4 0];
+maxN=-3;
+maxP=3;
+convol(a3,b3,maxN,maxP,5)
+</pre><img vspace="5" hspace="5" src="./Práctica 4_ Convolución y correlación de señales en tiempo continuo_files/ASySPrac4JorgeMontiel_05.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB® R2015b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Práctica 4: Convolución y correlación de señales en tiempo continuo 
+%  Cruz Montejo Jorge Luis
+%  Montiel Cruz Jorge de Jesús
+%  2MV1
+%  Análisis de Señales y Sistemas
+%% 1. 
+% Para el PR04 reporte la grafica de la simulación númerica de la convolución y compare con el resultado
+% análitico que obtuvo para el problema 1, esto
+% es, su práctica tendrá que incluir una llamada a la función
+% _convconm_ y posteriormente se tendrá que mostrar la gráfica tanto de las señales involucradas como el resultado de
+% la convolución, y en esta última gráficara su resultado analitico, se
+% tendrá que incluir el resultado analitico. 
+%%
+x=@(t) exp(-t).*(t>=0&t<=1);
+h=@(t) t.*(t>=-1&t<=1);
+convconm(x,h,1)
+%%
+% El resultado analítico
+%
+% <<RPL04_1.jpg>>
+%
+%% 2.
+% Para el PR05 reporte la gráfica de la simulación numérica de la
+% correlación y compare con el resultado análitico que obtuvo para el
+% problema e), esto es, su práctica tendrá que incluir una llamada a la
+% función _convconm_ y posteriormente se tendrá que mostrar la gráfica,
+% tanto de las señales involucradas como el resultado de la convolución, y
+% en esta última graficará su resultado analítico, se tendrá que incluir el
+% resultado analítico.
+%%
+ x2=@(t) ((t>=0)&(t<3))-((t>=3)&(t<4));
+ h2=@(t) ((t>=0)&(t<3))-((t>=3)&(t<4));
+ convconm(x2,h2,-1)
+%%
+% El resultado analítico
+%
+% <<RPL04_2.jpg>>
+%
+%% 3.
+% Realice la simulación de la convolución de las señales (c) con (d) del problema 3.1.1.
+%
+a=[-9 -6 -3 0 3 6 9];
+b=[0 4 2 0 2 4 0];
+n1=-3:3;
+convdisc([n1;a],[n1;b],3)
+%% 4. 
+% Realice la simulación de la correlación de las señales (c) con (d) del
+% problema 3.1.1.
+f1=@(n) 3*n.*(n>=-3 & n<=3);
+f2=@(n) -2*n.*(n>=-2 & n<=0)+2*n.*(n>0 & n<=2);
+a2=[-3 -2 -1 0 1 2 3];
+b2=[-3 -2 -1 0 1 2 3];
+convdisc([a2;f1(a2)],[b2;f2(b2)],4)
+%% 5
+% Realice  la convolución de las señales (c) con (d) del problema 3.1.1 utilizando el comando conv de MATLAB, muestre el código utilizado y gráfique el resultado, sugerencia: Utilice las propiedades de traslación de la convolución.
+a3=[-9 -6 -3 0 3 6 9];
+b3=[0 4 2 0 2 4 0];
+maxN=-3;
+maxP=3;
+convol(a3,b3,maxN,maxP,5)
+##### SOURCE END #####
+--></body></html>
